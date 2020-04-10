@@ -4,15 +4,16 @@ const moment = require("moment-timezone")
 const port = 3000
 
 let middleWare = (req, res, next) => {
-    let time = Date.now()
-    req.requestTime = moment(time).tz("Asia/Taipei").format("YYYY-MM-DD HH:mm:ss")
+    let startTime = Date.now()
+    req.requestTime = moment(startTime).tz("Asia/Taipei").format("YYYY-MM-DD HH:mm:ss")
     let message = req.requestTime + ' | ' + req.method + ' from ' +  req.originalUrl
-    console.log(message)
-
-    // res.on('finish', () => {
-    //     let finish = Date.now()
-    //     console.log(finish, 'finish')
-    // })
+    
+    // response time
+    res.on('finish', () => {
+        let finishTime = Date.now()
+        let responseTime = finishTime - startTime 
+        console.log(message, ' | total time: ', responseTime + 'ms')
+    })
 
     next()
 }
