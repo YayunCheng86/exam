@@ -12,7 +12,7 @@ let middleWare = (req, res, next) => {
     res.on('finish', () => {
         let finishTime = Date.now()
         let responseTime = finishTime - startTime 
-        console.log(message, ' | total time: ', responseTime + 'ms')
+        console.log(message, '| total time: ', responseTime + 'ms')
     })
 
     next()
